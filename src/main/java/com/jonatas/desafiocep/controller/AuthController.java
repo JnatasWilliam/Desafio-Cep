@@ -3,6 +3,7 @@ package com.jonatas.desafiocep.controller;
 import com.jonatas.desafiocep.repository.UsuarioRepository;
 import com.jonatas.desafiocep.security.JwtUtil;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -23,14 +24,25 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password())
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.username(), request.password())
+            );
 
-        UserDetails user = (UserDetails) authentication.getPrincipal();
-        String token = jwtUtil.gerarToken(user.getUsername());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String token = jwtUtil.gerarToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new LoginResponse(token));
+            return ResponseEntity.ok(new LoginResponse(token));
+
+        } catch (BadCredentialsException e) {
+            System.out.println("Credenciais inválidas: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos");
+
+        } catch (Exception e) {
+            System.out.println("Erro inesperado: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno");
+        }
     }
 
     public record LoginRequest(String username, String password) {}

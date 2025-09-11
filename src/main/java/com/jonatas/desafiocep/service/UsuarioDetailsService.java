@@ -33,6 +33,11 @@ public class UsuarioDetailsService implements UserDetailsService {
                 .username(usuario.getUsername())
                 .password(usuario.getPassword())
                 .roles(usuario.getRole().replace("ROLE_", ""))
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
                 .build();
+
     }
 }
