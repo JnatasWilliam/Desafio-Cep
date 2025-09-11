@@ -18,16 +18,11 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Buscando usuário: " + username);
         PasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println("Senha enviada: 123456");
         Usuario usuario = null;
 
         usuario = usuarioRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
-
-        System.out.println("Hash no Mongo: " + usuario.getPassword());
-        System.out.println("Senha bate? " + encoder.matches("123456", usuario.getPassword()));
 
         return User.builder()
                 .username(usuario.getUsername())
@@ -38,6 +33,5 @@ public class UsuarioDetailsService implements UserDetailsService {
                 .credentialsExpired(false)
                 .disabled(false)
                 .build();
-
     }
 }
