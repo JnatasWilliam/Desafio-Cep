@@ -33,7 +33,6 @@ public class UsuarioController {
 
         UsuarioDTO dto = new UsuarioDTO(
                 usuario.getUsername(),
-                usuario.getEmail(),
                 usuario.getRole()
         );
 

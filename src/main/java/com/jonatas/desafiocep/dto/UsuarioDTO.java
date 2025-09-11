@@ -7,6 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UsuarioDTO {
     private String username;
-    private String email;
     private String role;
 }
