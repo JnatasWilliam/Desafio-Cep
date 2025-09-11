@@ -18,7 +18,6 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
         Usuario usuario = null;
 
         usuario = usuarioRepo.findByUsername(username)
