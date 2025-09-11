@@ -22,14 +22,13 @@ public class UsuarioController {
         this.usuarioRepo = usuarioRepo;
     }
 
-    @GetMapping("/me")
+    @GetMapping("/usuario")
     public ResponseEntity<?> getUsuarioAutenticado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         Usuario usuario = usuarioRepo.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-
 
         UsuarioDTO dto = new UsuarioDTO(
                 usuario.getUsername(),
