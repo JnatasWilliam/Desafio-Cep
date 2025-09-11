@@ -1,5 +1,6 @@
 package com.jonatas.desafiocep.controller;
 
+import com.jonatas.desafiocep.dto.UsuarioDTO;
 import com.jonatas.desafiocep.model.Usuario;
 import com.jonatas.desafiocep.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,14 @@ public class UsuarioController {
         Usuario usuario = usuarioRepo.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-        return ResponseEntity.ok(usuario);
+
+        UsuarioDTO dto = new UsuarioDTO(
+                usuario.getUsername(),
+                usuario.getEmail(),
+                usuario.getRole()
+        );
+
+        return ResponseEntity.ok(dto);
+
     }
 }
