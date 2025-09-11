@@ -15,7 +15,6 @@ spring:
     user:
       name: admin
       password: 123456
-
-  cep:
-    api:
-      url: https://viacep.com.br/ws
+cep:
+  api:
+    url: https://viacep.com.br/ws
