@@ -2,3 +2,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/desafioCep?authSource=admin
+  security:
+    user:
+      name: admin
+      password: 123456
+
+  cep:
+    api:
+      url: https://viacep.com.br/ws

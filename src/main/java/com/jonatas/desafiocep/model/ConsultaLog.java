@@ -22,7 +22,7 @@ public class ConsultaLog {
     private String usuarioId;
     private String cepConsultado;
     private LocalDateTime dataConsulta;
-    private Map<String, Object> resultado;
+    private Resultado resultado;
     private String statusConsulta;
     private long tempoRespostaMs;
     private String origem;
