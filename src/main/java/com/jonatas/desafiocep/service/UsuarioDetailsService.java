@@ -22,12 +22,12 @@ public class UsuarioDetailsService implements UserDetailsService {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("Senha enviada: 123456");
         Usuario usuario = null;
-        System.out.println("Hash no Mongo: " + usuario.getPassword());
-        System.out.println("Senha bate? " + encoder.matches("123456", usuario.getPassword()));
-        System.out.println("Senha bate? " + encoder.matches("123456", usuario.getPassword()));
 
         usuario = usuarioRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+
+        System.out.println("Hash no Mongo: " + usuario.getPassword());
+        System.out.println("Senha bate? " + encoder.matches("123456", usuario.getPassword()));
 
         return User.builder()
                 .username(usuario.getUsername())
