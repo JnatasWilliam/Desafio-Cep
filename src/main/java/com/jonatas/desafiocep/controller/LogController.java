@@ -4,8 +4,10 @@ import com.jonatas.desafiocep.model.ConsultaLog;
 import com.jonatas.desafiocep.repository.ConsultaLogRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/logs")
 public class LogController {
