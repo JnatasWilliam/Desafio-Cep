@@ -2,10 +2,11 @@ package com.jonatas.desafiocep.service;
 
 import com.jonatas.desafiocep.model.Usuario;
 import com.jonatas.desafiocep.repository.UsuarioRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
@@ -18,19 +19,14 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = null;
-
-        usuario = usuarioRepo.findByUsername(username)
+        Usuario usuario = usuarioRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 
-        return User.builder()
-                .username(usuario.getUsername())
-                .password(usuario.getPassword())
-                .roles(usuario.getRole().replace("ROLE_", ""))
-                .accountExpired(false)
-                .accountLocked(false)
-                .credentialsExpired(false)
-                .disabled(false)
-                .build();
+        return new User(
+                usuario.getUsername(),
+                usuario.getPassword(),
+                List.of(new SimpleGrantedAuthority(usuario.getRole()))
+        );
     }
+
 }
