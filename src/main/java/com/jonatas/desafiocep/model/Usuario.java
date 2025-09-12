@@ -18,5 +18,5 @@ public class Usuario {
 
     private String password;
 
-    private String role; // Ex: "ROLE_USER", "ROLE_ADMIN"
+    private String role;
 }
